@@ -12,10 +12,21 @@ import { Bookmark, Heart, MessageCircle, MoreHorizontal, Search, Send } from "lu
 
 // Sample data for timeline and posts
 const timelineData = [
-  { id: "japan-2024", label: "Japan", date: "December 2024" },
-  { id: "greece-2024", label: "Greece", date: "Summer 2024" },
-  { id: "nyc-2024", label: "New York City", date: "Spring 2024" },
-  { id: "paris-2023", label: "Paris", date: "Fall 2023" },
+  { id: "japan-2024", label: "Japan", date: "December 2024", img: "instagramIcon.png" },
+  { id: "greece-2024", label: "Greece", date: "Summer 2024", img: "instagramIcon.png" },
+  { id: "musing-of-a-broke-girl", label: "Musings of a Broke Girl", date: "Fall 2024", img: "musingsofabrokegirl.png" },
+  { id: "tennesse-2021", label: "Tennesse", date: "Summer 2021", img: "instagramIcon.png" },
+]
+
+const socialMediaLinkData = [
+  {
+    id: "linkedin", label: "LinkedIn", image: "LinkedInLink.png",
+    link: "https://www.linkedin.com/in/mariam-abalo-toga-bb0161181/"
+  },
+  {
+    id: "instagram", label: "Instagram", image: "instagramIcon.png",
+    link: "https://www.instagram.com/onthelenz/"
+  }
 ]
 
 const postsData = [
@@ -49,17 +60,17 @@ const postsData = [
   },
   {
     id: 5,
-    category: "nyc-2024",
+    category: "musing-of-a-broke-girl",
     date: "April 3, 2024",
     content: "New York City skyline from Top of the Rock",
-    images: ["/placeholder.svg"],
+    images: ["/musingsofabrokegirl.png"],
   },
   {
     id: 6,
-    category: "paris-2023",
-    date: "October 12, 2023",
-    content: "Autumn in Paris",
-    images: ["/placeholder.svg", "/placeholder.svg"],
+    category: "tennesse-2021",
+    date: "June 26, 2021",
+    content: "Cloudy thoughts on top of mount LeConte",
+    images: ["/DSC04674.jpg", "/DSC04678.jpg", "/DSC04679.jpg", "/DSC04687.jpg"],
   },
 ]
 
@@ -82,26 +93,46 @@ export default function PortfolioFeedWithTimeline() {
           <ScrollArea className="flex-1">
             <nav className="space-y-2 p-4">
               <Button
-                className="w-full justify-start text-black"
+                className="w-full justify-start text-black allposts"
                 variant={selectedCategory === null ? "secondary" : "ghost"}
                 onClick={() => setSelectedCategory(null)}
               >
-                All Posts
+                <p>All Posts</p>
               </Button>
               {timelineData.map((item) => (
                 <Button
                   key={item.id}
-                  className="w-full justify-start"
+                  className="w-full justify-start relative group"
                   variant={selectedCategory === item.id ? "secondary" : "ghost"}
                   onClick={() => setSelectedCategory(item.id)}
                 >
-                  <div className="flex flex-col items-start">
+                  <div className="text-container flex flex-col items-start">
                     <span className="text-black">{item.label}</span>
                     <span className="text-xs text-gray-500">{item.date}</span>
+                    <img
+                      src={item.img}
+                      alt="hover"
+                      className="hover-image"
+                    />
                   </div>
                 </Button>
               ))}
             </nav>
+            {/* Social Media Links */}
+            <div className="fixed bottom-0 left-0 w-full flex">
+              {socialMediaLinkData.map((item) => (
+                <a href={item.link} target="_blank">
+                  <div className="p-1">
+                      <img 
+                      id={item.id} 
+                      src={item.image}
+                      style={{width:'26px', height:'26px'}}
+                      >
+                      </img>
+                  </div>
+                </a>
+                ))}
+            </div>
           </ScrollArea>
         </div>
       </aside>
@@ -118,14 +149,14 @@ export default function PortfolioFeedWithTimeline() {
             </form>
             <Avatar>
               <AvatarImage alt="Mariam Abalo-Toga" src="/placeholder-avatar.jpg" />
-              <AvatarFallback>AB</AvatarFallback>
+              <AvatarFallback>MA</AvatarFallback>
             </Avatar>
           </div>
         </header>
 
         {/* Feed */}
         <ScrollArea className="h-[calc(100vh-5rem)]">
-          <div className="mx-auto max-w-2xl space-y-4 p-4">
+          <div className="mx-auto max-w-5xl space-y-4 p-4">
             {filteredPosts.map((post) => (
               <Card key={post.id}>
                 <CardHeader className="flex flex-row items-center gap-4">
@@ -144,15 +175,19 @@ export default function PortfolioFeedWithTimeline() {
                 <CardContent className="p-0">
                   <div className={`grid gap-1 ${post.images.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                     {post.images.map((image, index) => (
-                      <Image
-                        key={index}
-                        alt={`Portfolio image ${index + 1}`}
-                        className="aspect-square object-cover"
-                        height={300}
-                        src={image}
-                        width={300}
-                      />
-                    ))}
+                      <div key={index} className="relative w-auto">
+                        <Image
+                          key={index}
+                          alt={`Portfolio image ${index + 1}`}
+                          //className="aspect-square object-cover"
+                          height={0}
+                          src={image}
+                          width={0}
+                          sizes='100vw'
+                          style={{ width: '100%', height: 'auto' }}
+                        />
+                      </div>
+                      ))}
                   </div>
                 </CardContent>
                 <CardFooter className="flex flex-col items-start gap-4">
