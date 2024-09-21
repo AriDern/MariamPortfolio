@@ -13,9 +13,9 @@ import { Bookmark, Heart, MessageCircle, MoreHorizontal, Search, Send } from "lu
 // Sample data for timeline and posts
 const timelineData = [
   { id: "japan-2024", label: "Japan", date: "December 2024", img: "instagramIcon.png" },
-  { id: "greece-2024", label: "Greece", date: "Summer 2024", img: "instagramIcon.png" },
-  { id: "musing-of-a-broke-girl", label: "Musings of a Broke Girl", date: "Fall 2024", img: "musingsofabrokegirl.png" },
-  { id: "tennesse-2021", label: "Tennesse", date: "Summer 2021", img: "instagramIcon.png" },
+  { id: "greece-2024", label: "Greece", date: "Summer 2024", img: "DSC04674topmargin.png" },
+  { id: "musing-of-a-broke-girl", label: "Musings of a Broke Girl", date: "Fall 2024", img: "musingsofabrokegirltopmargin.png" },
+  { id: "tennesse-2021", label: "Tennesse", date: "Summer 2021", img: "DSC04678.jpg" },
 ]
 
 const socialMediaLinkData = [
@@ -82,19 +82,19 @@ export default function PortfolioFeedWithTimeline() {
     : postsData
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen">
       {/* Timeline */}
-      <aside className="w-64 border-r bg-white">
+      <aside className="w-64 border-r bg-sand">
         <div className="flex h-full flex-col">
-          <div className="p-4">
+          <div className="p-4 bg-lightsand">
             <h2 className="mb-2 text-lg font-semibold text-black">Mariam Abalo-Toga</h2>
             <p className="text-sm text-gray-600">Travel Photographer</p>
           </div>
           <ScrollArea className="flex-1">
             <nav className="space-y-2 p-4">
               <Button
-                className="w-full justify-start text-black allposts"
-                variant={selectedCategory === null ? "secondary" : "ghost"}
+                className="w-full justify-start text-black"
+                variant={selectedCategory === null ? "timelinebarsecondary" : "timelinebarghost"}
                 onClick={() => setSelectedCategory(null)}
               >
                 <p>All Posts</p>
@@ -102,18 +102,21 @@ export default function PortfolioFeedWithTimeline() {
               {timelineData.map((item) => (
                 <Button
                   key={item.id}
-                  className="w-full justify-start relative group"
-                  variant={selectedCategory === item.id ? "secondary" : "ghost"}
+                  className="w-full justify-start relative group hideimage"
+                  variant={selectedCategory === item.id ? "timelinebarsecondary" : "timelinebarghost"}
                   onClick={() => setSelectedCategory(item.id)}
+                  style={{backgroundImage: `url('/${item.img}')`}}
                 >
-                  <div className="text-container flex flex-col items-start">
+                  <div className="text-container flex flex-col items-start hidetext">
                     <span className="text-black">{item.label}</span>
                     <span className="text-xs text-gray-500">{item.date}</span>
+                    {/*
                     <img
                       src={item.img}
                       alt="hover"
                       className="hover-image"
                     />
+                    */}
                   </div>
                 </Button>
               ))}
@@ -140,8 +143,8 @@ export default function PortfolioFeedWithTimeline() {
       {/* Main content */}
       <main className="flex-1">
         {/* Header */}
-        <header className="flex items-center justify-between border-b bg-white p-4 text-black">
-          <h1 className="text-2xl font-bold text-black">Travel Portfolio</h1>
+        <header className="flex items-center justify-between border-b bg-redsand p-4">
+          <h1 className="text-2xl font-bold text-lightsand">Travel Portfolio</h1>
           <div className="flex items-center space-x-4">
             <form className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />

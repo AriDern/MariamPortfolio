@@ -35,28 +35,21 @@
     --radius: 0.5rem;
   }
 
-  /* Style the image inside the button */
-  .hover-image {
-    width: 0px; /* Initial small size */
-    height: 0px; /* Initial small size */
-    /*position: absolute;
-    top: 50%;
-    left: 0%; /* Positioning it next to the button */
-    /*transform: translateY(-50%);*/
-    transition: width 0.3s ease, height 0.3s ease;
-    /* Optional: Initially hide the image if needed */
-    opacity: 0;
+  /* Remove button text when hovered for timeline buttons other than "All Posts" */
+  .group:hover .hidetext {
+    visibility: hidden;
   }
 
-  /* do not expand All Posts button when hovered */
-  .allposts:hover {
-    padding-top: 0%;
-    padding-bottom: 0%;
+  /* Remove background image when timeline button is not hovered */
+  .hideimage {
+    background-size: 0;
   }
 
   /* When hovering over the button, expand the image and increase height*/
   Button:hover {
-    padding-top: 85%; /* Increase height to make space for the expanded image */
+    height: 85%; /* Increase height to make space for the expanded image */
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   
   /* On button hover, increase the height and font size for text within the sub divs */
@@ -72,6 +65,12 @@
     margin-top: 3px;
     display: flex;
     justify-content: left;
+  }
+
+  /* shrink top-most header on scroll */
+  .top-header {
+    position: fixed;
+    transition: 0.4s;
   }
  
   .dark {

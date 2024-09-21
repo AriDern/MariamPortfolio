@@ -17,6 +17,9 @@ module.exports = {
       },
       extend: {
         colors: {
+          sand: "#eab676",
+          lightsand: "#fde9b4",
+          redsand: "#b8400b",
           border: "hsl(var(--border))",
           input: "hsl(var(--input))",
           ring: "hsl(var(--ring))",
