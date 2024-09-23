@@ -12,10 +12,30 @@ import { Bookmark, Heart, MessageCircle, MoreHorizontal, Search, Send } from "lu
 
 // Sample data for timeline and posts
 const timelineData = [
-  { id: "japan-2024", label: "Japan", date: "December 2024", img: "instagramIcon.png" },
-  { id: "greece-2024", label: "Greece", date: "Summer 2024", img: "DSC04674topmargin.png" },
-  { id: "musing-of-a-broke-girl", label: "Musings of a Broke Girl", date: "Fall 2024", img: "musingsofabrokegirltopmargin.png" },
-  { id: "tennesse-2021", label: "Tennesse", date: "Summer 2021", img: "DSC04678.jpg" },
+  { 
+    id: "japan-2024", 
+    label: "Japan", 
+    date: "December 2024", 
+    img: "DSC04687.jpg" 
+  },
+  { 
+    id: "greece-2024", 
+    label: "Greece", 
+    date: "Summer 2024", 
+    img: "DSC04674topmargin.png" 
+  },
+  { 
+    id: "musing-of-a-broke-girl", 
+    label: "Musings of a Broke Girl", 
+    date: "Fall 2024", 
+    img: "musingsofabrokegirltopmargin.png" 
+  },
+  { 
+    id: "tennesse-2021", 
+    label: "Tennesse",
+    date: "Summer 2021", 
+    img: "DSC04678.jpg" 
+  },
 ]
 
 const socialMediaLinkData = [
@@ -76,10 +96,19 @@ const postsData = [
 
 export default function PortfolioFeedWithTimeline() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedCategoryLabel, setSelectedCategoryLabel] = useState<string>("Travel Portfolio")
+
+  // Find the selected category's data
+  const selectedCategoryData = timelineData.find((item) => item.id === selectedCategory);
 
   const filteredPosts = selectedCategory
     ? postsData.filter((post) => post.category === selectedCategory)
     : postsData
+
+  const handleCategoryClick = (id: string | null, label: string) => {
+    setSelectedCategory(id)
+    setSelectedCategoryLabel(id ? label : "Travel Portfolio")
+  }
 
   return (
     <div className="flex h-screen">
@@ -95,7 +124,7 @@ export default function PortfolioFeedWithTimeline() {
               <Button
                 className="w-full justify-start text-black"
                 variant={selectedCategory === null ? "timelinebarsecondary" : "timelinebarghost"}
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => handleCategoryClick(null, "Travel Portfolio")}
               >
                 <p>All Posts</p>
               </Button>
@@ -104,7 +133,7 @@ export default function PortfolioFeedWithTimeline() {
                   key={item.id}
                   className="w-full justify-start relative group hideimage"
                   variant={selectedCategory === item.id ? "timelinebarsecondary" : "timelinebarghost"}
-                  onClick={() => setSelectedCategory(item.id)}
+                  onClick={() => handleCategoryClick(item.id, item.label)}
                   style={{backgroundImage: `url('/${item.img}')`}}
                 >
                   <div className="text-container flex flex-col items-start hidetext">
@@ -143,8 +172,17 @@ export default function PortfolioFeedWithTimeline() {
       {/* Main content */}
       <main className="flex-1">
         {/* Header */}
-        <header className="flex items-center justify-between border-b bg-redsand p-4">
-          <h1 className="text-2xl font-bold text-lightsand">Travel Portfolio</h1>
+        <header 
+        className="flex items-center justify-between border-b bg-redsand p-4"
+        style={{
+          backgroundImage: selectedCategoryData
+            ? `url('/${selectedCategoryData.img}')`
+            : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        >
+          <h1 className="text-2xl font-bold text-lightsand">{selectedCategoryLabel}</h1>
           <div className="flex items-center space-x-4">
             <form className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
